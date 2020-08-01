@@ -1,2 +1,2 @@
 # Neural-Network-Library---js
-This is my implementation of the neural network for deep learning
+This is my implementation of the neural network for my deep learning projects.
