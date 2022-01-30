@@ -2,17 +2,12 @@ const Matrix = require("./Matrix.js");
 
 class NN {
 	constructor(layer_info, activation = 'sigmoid', learning_rate = 0.1) {
-		this.no_inp_nodes = no_inp_nodes;
-		this.no_ans_nodes = no_ans_nodes;
-		this.no_hidden_layers = no_hidden_layers;
-		this.no_hidden_nodes = no_hidden_nodes;
 		this.layer_info = layer_info;
 		this.layers;
 		this.weights;
 		this.bias;
 		this.forw_prop;
 		this.activation = activation;
-		this.dactivation = dactivation;
 		this.learning_rate = learning_rate;
 		this.output_matrix;
 		this.activation_function = {
@@ -81,7 +76,6 @@ class NN {
 			temp = new Matrix(this.layer_info[i], 1);
 			this.layers.push(temp);
 		}
-		temp = new Matrix(this.no_ans_nodes, 1);
 		this.layers.push(temp);
 
 		// Assigning random weights
@@ -167,7 +161,7 @@ class NN {
 	}
 
 	static load_trained_NN(loadNN) {
-		let newNN = new NN(loadNN.no_inp_nodes, loadNN.no_ans_nodes, loadNN.no_hidden_layers, loadNN.no_hidden_nodes);
+		let newNN = new NN(loadNN.layer_info, loadNN.activation, loadNN.learning_rate);
 		newNN.initialise();
 		for (let i = 0; i < loadNN.bias.length; i++) {
 			newNN.bias[i] = Matrix.fromArray(Matrix.toArray(loadNN.bias[i]));
