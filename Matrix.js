@@ -88,8 +88,8 @@ class Matrix {
 
 	static multiply(a, b) {
 		if (a.cols !== b.rows) {
-			console.log('Columns of A must match rows of B.');
-			return undefined;
+			console.error('ERROR: Columns of A must match rows of B.');
+			return;
 		}
 		let result = new Matrix(a.rows, b.cols);
 		for (let i = 0; i < result.rows; i++) {
@@ -111,8 +111,7 @@ class Matrix {
 					this.data[i][j] *= n.data[i][j];
 				}
 			}
-		}
-		else {
+		} else {
 			for (let i = 0; i < this.rows; i++) {
 				for (let j = 0; j < this.cols; j++) {
 					this.data[i][j] *= n;
