@@ -1,5 +1,3 @@
-const Matrix = require('./Matrix.js');
-
 class NN {
 	constructor(layer_info, activation = 'sigmoid', learning_rate = 0.1) {
 		// Expecting only a layer_info as an array of integers.
