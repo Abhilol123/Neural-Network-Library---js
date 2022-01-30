@@ -65,6 +65,7 @@ class EvolvingNN {
 	}
 
 	static getNewGen(population, layer_info, activation = 'sigmoid', learning_rate = 0.1) {
+		// use this function to get a generation of NN instances
 		let newGen = []
 		for (let i = 0; i < population; i++) {
 			newGen.push(new EvolvingNN(layer_info, activation, learning_rate));
@@ -72,24 +73,8 @@ class EvolvingNN {
 		return newGen
 	}
 
-	static generateCopy(oldNN) {
-		let newNN = new EvolvingNN(oldNN.layer_info, oldNN.activation, oldNN.learning_rate, oldNN.generation + 1);
-		newNN.weights = [];
-		newNN.bias = [];
-		newNN.forw_prop = [];
-		for (let i = 0; i < oldNN.weights.length; i++) {
-			newNN.weights.push(Matrix.fromArray(oldNN.weights[i].data));
-		}
-		for (let i = 0; i < oldNN.bias.length; i++) {
-			newNN.bias.push(Matrix.fromArray(oldNN.bias[i].data));
-		}
-		for (let i = 0; i < oldNN.forw_prop.length; i++) {
-			newNN.forw_prop.push(Matrix.fromArray(oldNN.forw_prop[i].data));
-		}
-		return newNN;
-	}
-
 	static getNextGen(oldGen, learning_rate) {
+		// Use this function to create a new generation from old gen
 		if (learning_rate) {
 			this.learning_rate = learning_rate;
 		}
@@ -122,6 +107,23 @@ class EvolvingNN {
 			newGen.push(new EvolvingNN(oldGen[0].layer_info, oldGen[0].activation, oldGen[0].learning_rate, oldGen[0].generation + 1));
 		}
 		return { newGen: newGen, oldGen: oldGen };
+	}
+
+	static generateCopy(oldNN) {
+		let newNN = new EvolvingNN(oldNN.layer_info, oldNN.activation, oldNN.learning_rate, oldNN.generation + 1);
+		newNN.weights = [];
+		newNN.bias = [];
+		newNN.forw_prop = [];
+		for (let i = 0; i < oldNN.weights.length; i++) {
+			newNN.weights.push(Matrix.fromArray(oldNN.weights[i].data));
+		}
+		for (let i = 0; i < oldNN.bias.length; i++) {
+			newNN.bias.push(Matrix.fromArray(oldNN.bias[i].data));
+		}
+		for (let i = 0; i < oldNN.forw_prop.length; i++) {
+			newNN.forw_prop.push(Matrix.fromArray(oldNN.forw_prop[i].data));
+		}
+		return newNN;
 	}
 
 	static load_generation(nn_object, population = 1000) {
