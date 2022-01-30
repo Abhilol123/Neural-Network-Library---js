@@ -13,11 +13,17 @@ class Matrix {
 	}
 
 	static fromArray(arr) {
-		let m = new Matrix(arr.length, arr[0].length);
+		let newMatrix = new Matrix(arr.length, arr[0].length);
+		let newArray = [];
 		for (let i = 0; i < arr.length; i++) {
-			m.data[i] = arr[i];
+			let temp = [];
+			for (let j = 0; j < arr[i].length; j++) {
+				temp.push(arr[i][j]);
+			}
+			newArray.push(temp);
 		}
-		return m;
+		newMatrix.data = newArray
+		return newMatrix;
 	}
 
 	static toArray(mat) {
