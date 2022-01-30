@@ -11,62 +11,19 @@ class NN {
 		this.learning_rate = learning_rate;
 		this.output_matrix;
 		this.activation_function = {
-			'sigmoid': (number) => {
-				let solution = number;
-				solution = (1 / (1 + Math.pow(2.71828, -number)));
-				return solution;
-			},
-			'linear': (number) => {
-				return number;
-			},
-			'tanh': (number) => {
-				let solution = (2 / (1 + Math.pow(2.71828, -2 * number))) - 1;
-				return solution;
-			},
-			'relu': (number) => {
-				let solution = number;
-				if (solution < 0) {
-					solution = 0;
-				}
-				return solution;
-			},
-			'elu': (number) => {
-				let solution = number;
-				let alpha = 1;
-				if (solution < 0) {
-					solution = alpha * (Math.pow(2.71828, number) - 1);
-				}
-				return solution;
-			},
+			'sigmoid': (number) => { return (1 / (1 + Math.pow(2.71828, -number))); },
+			'linear': (number) => { return (number); },
+			'tanh': (number) => { return ((2 / (1 + Math.pow(2.71828, -2 * number))) - 1); },
+			'relu': (number) => { return (number < 0 ? 0 : number); },
+			'elu': (number, alpha = 1) => { return (number < 0 ? (alpha * (Math.pow(2.71828, number) - 1)) : number); }
 		};
 		this.deactivation_function = {
-			'sigmoid': (number) => {
-				let solution;
-				solution = number * (1 - number);
-				return solution;
-			},
-			'linear': (number) => {
-				return 1;
-			},
-			'tanh': (number) => {
-				let solution = 1 - Math.pow(tanh(number), 2);
-			},
-			'relu': (number) => {
-				let solution = 1;
-				if (number < 0) {
-					solution = 0;
-				}
-				return solution;
-			},
-			'elu': (number) => {
-				let solution = 1;
-				let alpha = 1;
-				if (number < 0) {
-					solution = elu(number) + alpha;
-				}
-				return solution;
-			}
-		}
+			'sigmoid': (number) => { return (number * (1 - number)); },
+			'linear': (number) => { return 1; },
+			'tanh': (number) => { return (1 - Math.pow(tanh(number), 2)); },
+			'relu': (number) => { return (number < 0 ? 0 : 1); },
+			'elu': (number, alpha = 1) => { return (number < 0 ? ((number < 0 ? (alpha * (Math.pow(2.71828, number) - 1)) : number) + alpha) : 1); }
+		};
 	}
 
 	initialise() {
