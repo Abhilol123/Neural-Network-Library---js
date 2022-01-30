@@ -30,10 +30,8 @@ class NN {
 		// Creating layers of the neural network
 		this.layers = [];
 		for (let i = 0; i < this.layer_info.length; i++) {
-			temp = new Matrix(this.layer_info[i], 1);
-			this.layers.push(temp);
+			this.layers.push(new Matrix(this.layer_info[i], 1));
 		}
-		this.layers.push(temp);
 
 		// Assigning random weights
 		this.weights = [];
