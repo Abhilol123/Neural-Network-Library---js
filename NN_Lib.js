@@ -136,20 +136,45 @@ class NN {
 		}
 	}
 
-	static load_trained_NN(loadNN) {
-		let newNN = new NN(loadNN.layer_info, loadNN.activation, loadNN.learning_rate);
-		newNN.initialise();
-		for (let i = 0; i < loadNN.bias.length; i++) {
-			newNN.bias[i] = Matrix.fromArray(Matrix.toArray(loadNN.bias[i]));
+	static load_trained_NN(nn_object) {
+		function convertObject(inputVariable) {
+			if (inputVariable) {
+				switch (Object.prototype.toString.call(inputVariable)) {
+					case '[object Array]':
+						if (inputVariable[0] && inputVariable[0].rows && inputVariable[0].cols && inputVariable[0].data) {
+							let newArr = []
+							for (let i = 0; i < inputVariable.length; i++) {
+								newArr.push(Matrix.fromArray(inputVariable[i].data))
+							}
+							return newArr;
+						}
+						if (inputVariable[0] && Object.prototype.toString.call(inputVariable[0]) === '[object Number]') {
+							return inputVariable;
+						}
+						return null;
+					case '[object String]':
+					case '[object Number]':
+						return inputVariable;
+					case '[object Object]':
+					default:
+						return null;
+				}
+			} else {
+				return null;
+			}
 		}
-		for (let i = 0; i < loadNN.weights.length; i++) {
-			newNN.weights[i] = Matrix.fromArray(Matrix.toArray(loadNN.weights[i]));
+		let newNN = new NN(nn_object.layer_info);
+		for (let i = 0; i < Object.keys(nn_object).length; i++) {
+			let convertedObject = convertObject(nn_object[Object.keys(nn_object)[i]]);
+			if (convertedObject) {
+				newNN[[Object.keys(nn_object)[i]]] = convertedObject;
+			}
 		}
 		return newNN;
 	}
 
-	static save_trained_NN() {
-		return (JSON.stringify(this));
+	static save_trained_NN(nn_object) {
+		return JSON.stringify(nn_object);
 	}
 }
 
